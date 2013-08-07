@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/flikbox_logo">
+        <file>flick_logo.qrc</file>
+        <file alias="flikboxlogo">resources/icons/flikbox_logo_70x50.png</file>
+    </qresource>
+</RCC>

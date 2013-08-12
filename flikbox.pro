@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui webkitwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,4 +24,4 @@ OTHER_FILES += \
     ../../Documents/flikbox mockups/flikbox_logo_70x50.png
 
 RESOURCES += \
-    flick_logo.qrc
+    resources/flikbox.qrc

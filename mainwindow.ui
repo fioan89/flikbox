@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>flikbox</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources/flikbox.qrc">
+    <normaloff>:/icons/icons/flikbox_icon_32x32.png</normaloff>:/icons/icons/flikbox_icon_32x32.png</iconset>
+  </property>
   <property name="tabShape">
    <enum>QTabWidget::Triangular</enum>
   </property>
@@ -610,6 +614,18 @@ background-image: url(:/icons/icons/flikbox_logo_70x50.png);</string>
       <height>450</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>0</height>
+     </size>
+    </property>
     <property name="font">
      <font>
       <weight>75</weight>
@@ -637,6 +653,9 @@ background-image: url(:/icons/icons/flikbox_logo_70x50.png);</string>
     <property name="elideMode">
      <enum>Qt::ElideMiddle</enum>
     </property>
+    <property name="usesScrollButtons">
+     <bool>false</bool>
+    </property>
     <property name="documentMode">
      <bool>false</bool>
     </property>
@@ -645,9 +664,9 @@ background-image: url(:/icons/icons/flikbox_logo_70x50.png);</string>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>           Login           </string>
+      <string>       Login       </string>
      </attribute>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="leLoginUser">
       <property name="geometry">
        <rect>
         <x>225</x>
@@ -663,7 +682,7 @@ background-image: url(:/icons/icons/flikbox_logo_70x50.png);</string>
        <string>Username/Email</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_2">
+     <widget class="QLineEdit" name="leLoginPass">
       <property name="geometry">
        <rect>
         <x>225</x>
@@ -685,7 +704,7 @@ background-image: url(:/icons/icons/flikbox_logo_70x50.png);</string>
        <string>Password</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QCheckBox" name="cbRememberMe">
       <property name="geometry">
        <rect>
         <x>376</x>
@@ -797,6 +816,78 @@ background-image: url(:/icons/icons/flikbox_logo_70x50.png);</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QPushButton" name="btLogin">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>360</y>
+        <width>100</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Login!</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbRegister">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>360</y>
+        <width>350</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;a href=&quot;http://flickr.com&quot;&gt; Don't have an acount? Please register!&quot;&lt;/a&gt;</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::RichText</enum>
+      </property>
+      <property name="textInteractionFlags">
+       <set>Qt::TextBrowserInteraction</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbLoginError">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>310</y>
+        <width>550</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 51, 51);</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -838,6 +929,8 @@ background-image: url(:/icons/icons/flikbox_logo_70x50.png);</string>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources/flikbox.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -3,5 +3,6 @@
         <file>icons/flikbox_logo_70x50.png</file>
         <file>icons/persona_30x30.png</file>
         <file>icons/lock_30x30.png</file>
+        <file>icons/flikbox_icon_32x32.png</file>
     </qresource>
 </RCC>

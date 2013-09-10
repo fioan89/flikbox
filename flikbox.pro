@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui webkitwidgets
-
+QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = flikbox
@@ -13,9 +12,15 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    flickrauth.cpp \
+    crypto.cpp \
+    httpmanager.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    flickrauth.h \
+    crypto.h \
+    httpmanager.h
 
 FORMS    += mainwindow.ui
 

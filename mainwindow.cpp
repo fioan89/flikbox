@@ -10,8 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->lbRegister->setOpenExternalLinks(true);
-    ui->leLoginUser->setText("fioan89@yahoo.com");
-    ui->leLoginPass->setText("BlueEyes89");
 }
 
 MainWindow::~MainWindow()

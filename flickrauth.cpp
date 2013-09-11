@@ -26,6 +26,25 @@ FlickrAuth::FlickrAuth(QString userName, QString userPassword, bool rememberMe)
     // start authentication
     QUrl toRequest = this->getRequestTokenUrl();
     QString oauthTokenHeader = this->getRequestTokenHeader(toRequest);
+    qDebug(oauthTokenHeader.toStdString().c_str());
+    if (!oauthTokenHeader.contains("oauth_problem"))
+    {
+        QString oauthToken = this->extractOAuthToken(oauthTokenHeader);
+        QString oauthTokenSecret = this->extractOAuthTokenSecret(oauthTokenHeader);
+        if (oauthToken != "" && oauthTokenSecret != "")
+        {
+
+        }
+        else
+        {
+            // TODO
+        }
+    }
+    else
+    {
+        // TODO
+    }
+
 }
 
 QUrl FlickrAuth::getRequestTokenUrl()
@@ -81,4 +100,33 @@ QString FlickrAuth::getRequestTokenHeader(QUrl url)
     loop.exec();
     return reply->readAll();
 }
+
+QString FlickrAuth::extractOAuthToken(QString message)
+{
+    QString toReturn;
+    if (message.contains("oauth_token="))
+    {
+        QString toSearch=("oauth_token=");
+        QString separator("&");
+        int startingPosition = message.indexOf(toSearch) + toSearch.length();
+        int length = message.indexOf(separator, startingPosition) - startingPosition;
+        toReturn = message.mid(startingPosition, length);
+    }
+    return toReturn;
+}
+
+
+QString FlickrAuth::extractOAuthTokenSecret(QString message)
+{
+    QString toReturn;
+    if (message.contains("oauth_token_secret="))
+    {
+        QString toSearch=("oauth_token_secret=");
+        int startingPosition = message.indexOf(toSearch) + toSearch.length();
+        int length = message.length() - startingPosition;
+        toReturn = message.mid(startingPosition, length);
+    }
+    return toReturn;
+}
+
 

@@ -36,6 +36,22 @@ private:
      */
     QString getRequestTokenHeader(QUrl url);
 
+    /**
+     * @brief extractOAuthToken Finds the oauth_token key in the given
+     * message returns its value.
+     * @param message a string containing an oauth_token and it's value separated by "=" char.
+     * @return the oauth_token value or an empty string if the key could not be found.
+     */
+    QString extractOAuthToken(QString message);
+
+    /**
+     * @brief extractOAuthTokenSecret Finds the oauth_token_seccret key in the given
+     * message returns its value.
+     * @param message a string containing an oauth_token_secret and it's value separated by "=" char.
+     * @return the oauth_token_secret value or an empty string if the key could not be found.
+     */
+    QString extractOAuthTokenSecret(QString message);
+
 public:
     FlickrAuth(QString userName, QString userPassword, bool rememberMe);
 

@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     ui->lbRegister->setOpenExternalLinks(true);
 }
 
@@ -86,6 +85,5 @@ void MainWindow::on_btLogin_clicked()
         ui->lbLoginError->setText("Invalid password provided!");
         return;
     }
-    FlickrAuth fAuth(ui->leLoginUser->text(), ui->leLoginPass->text(), ui->cbRememberMe->isChecked());
-
+    FlickrAuth fAuth(ui->centralWidget, ui->leLoginUser->text(), ui->leLoginPass->text(), ui->cbRememberMe->isChecked());
 }

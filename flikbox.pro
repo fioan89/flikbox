@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core gui network webkit webkitwidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = flikbox
@@ -15,14 +15,17 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     flickrauth.cpp \
     crypto.cpp \
-    httpmanager.cpp
+    httpmanager.cpp \
+    logindialog.cpp
 
 HEADERS  += mainwindow.h \
     flickrauth.h \
     crypto.h \
-    httpmanager.h
+    httpmanager.h \
+    logindialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    logindialog.ui
 
 OTHER_FILES += \
     ../../Documents/flikbox mockups/flikbox_logo_70x50.png \

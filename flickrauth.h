@@ -7,6 +7,8 @@
 #include <QString>
 #include <QUrl>
 
+#include "logindialog.h"
+
 class FlickrAuth : public QObject
 {
     Q_OBJECT
@@ -16,7 +18,8 @@ private:
     QString userName;
     QString userPassword;
     bool rememberMe;
-    volatile bool tokenSeriveHasReplied;
+    QWidget* parent;
+    LoginDialog* loginDialog;
 
     QNetworkAccessManager* httpManager;
 
@@ -52,9 +55,12 @@ private:
      */
     QString extractOAuthTokenSecret(QString message);
 
-public:
-    FlickrAuth(QString userName, QString userPassword, bool rememberMe);
+    bool authorizeApplicationAccess(QString oauth_token);
 
+public:
+    FlickrAuth(QWidget* parent, QString userName, QString userPassword, bool rememberMe);
+
+    ~FlickrAuth();
 };
 
 #endif // FLICKRAUTH_H

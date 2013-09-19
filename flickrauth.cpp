@@ -8,16 +8,16 @@
 #include "flickrauth.h"
 #include "httpmanager.h"
 
-FlickrAuth::FlickrAuth(QString userName, QString userPassword, bool rememberMe)
+FlickrAuth::FlickrAuth(QWidget* parent, QString userName, QString userPassword, bool rememberMe)
     : QObject(0)
 {
     // init block
+    this->parent = parent;
     this->userName = userName;
     this->userPassword = userPassword;
     this->rememberMe = rememberMe;
     this->appKey = "9b056c64eb70d14a1fd999393db186fe";
     this->secretKey = "4f72239681847041";
-    this->tokenSeriveHasReplied = false;
 
     this->httpManager = HTTPManager::getInstance().getNetworkAccessManager();
 
@@ -33,7 +33,7 @@ FlickrAuth::FlickrAuth(QString userName, QString userPassword, bool rememberMe)
         QString oauthTokenSecret = this->extractOAuthTokenSecret(oauthTokenHeader);
         if (oauthToken != "" && oauthTokenSecret != "")
         {
-
+            this->authorizeApplicationAccess(oauthToken);
         }
         else
         {
@@ -98,6 +98,7 @@ QString FlickrAuth::getRequestTokenHeader(QUrl url)
     connect(httpManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
     QNetworkReply* reply = httpManager->get(QNetworkRequest(url));
     loop.exec();
+    reply->deleteLater();
     return reply->readAll();
 }
 
@@ -130,3 +131,22 @@ QString FlickrAuth::extractOAuthTokenSecret(QString message)
 }
 
 
+bool FlickrAuth::authorizeApplicationAccess(QString oauth_token)
+{
+    QUrl url("http://www.flickr.com/services/oauth/authorize?oauth_token=" + oauth_token + "&perms=delete");
+    qDebug(url.toString().toStdString().c_str());
+    QEventLoop loop;
+    this->loginDialog = new LoginDialog(this->parent);
+    this->loginDialog->loadUrl(url);
+    this->loginDialog->show();
+    loop.exec();
+    return true;
+}
+
+FlickrAuth::~FlickrAuth()
+{
+    if (this->loginDialog != NULL)
+    {
+        delete this->loginDialog;
+    }
+}

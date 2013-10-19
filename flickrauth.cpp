@@ -3,7 +3,10 @@
 #include <QChar>
 #include <QEventLoop>
 #include <QNetworkRequest>
+#include <QPixmap>
+#include <QSplashScreen>
 
+#include "accesstoken.h"
 #include "crypto.h"
 #include "flickrauth.h"
 #include "httpmanager.h"
@@ -33,7 +36,16 @@ FlickrAuth::FlickrAuth(QWidget* parent, QString userName, QString userPassword, 
         QString oauthTokenSecret = this->extractOAuthTokenSecret(oauthTokenHeader);
         if (oauthToken != "" && oauthTokenSecret != "")
         {
-            this->authorizeApplicationAccess(oauthToken);
+            RequestToken reqToken = this->authorizeApplicationAccess(oauthToken);
+            if ("" != reqToken.getOAuthToken() && "" != reqToken.getOAuthVerifier())
+            {
+                //AccessToken accessToken = getAccessToken(reqToken);
+            }
+            else
+            {
+                // TODO
+            }
+
         }
         else
         {
@@ -131,16 +143,37 @@ QString FlickrAuth::extractOAuthTokenSecret(QString message)
 }
 
 
-bool FlickrAuth::authorizeApplicationAccess(QString oauth_token)
+RequestToken FlickrAuth::authorizeApplicationAccess(QString oauth_token)
 {
     QUrl url("http://www.flickr.com/services/oauth/authorize?oauth_token=" + oauth_token + "&perms=delete");
+    RequestToken requestToken;
+
     qDebug(url.toString().toStdString().c_str());
+    if (this->loginDialog == NULL)
+    {
+        this->loginDialog = new LoginDialog(this->parent, &requestToken);
+    }
     QEventLoop loop;
-    this->loginDialog = new LoginDialog(this->parent);
+    loop.connect(this->loginDialog, SIGNAL(destroyed(QObject*)), SLOT(quit()));
+
+    QPixmap pixmap(":/icons/icons/flickbox_loading_splash_46x46.gif");
+    QSplashScreen *splash = new QSplashScreen(pixmap);
+
+    splash->show();
+    this->loginDialog->setUserName(this->userName);
+    this->loginDialog->setPassword(this->userPassword);
     this->loginDialog->loadUrl(url);
-    this->loginDialog->show();
     loop.exec();
-    return true;
+    delete splash;
+    return requestToken;
+}
+
+AccessToken FlickrAuth::getAccessToken(RequestToken requestToken)
+{
+    QUrl toCall("http://www.flickr.com/services/oauth/access_token?oauth_nonce=" + Crypto::getRandomString(8) +
+                "&oauth_timestamp=" + QString::number(time(0)) + "&oauth_verifier=" + requestToken.getOAuthVerifier() +
+                "&oauth_consumer_key=" + this->appKey + "&oauth_signature_method=HMAC-SHA1&oauth_version=1.0&oauth_token=" +
+                requestToken.getOAuthToken() + "&oauth_signature=");
 }
 
 FlickrAuth::~FlickrAuth()

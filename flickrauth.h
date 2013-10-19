@@ -7,7 +7,9 @@
 #include <QString>
 #include <QUrl>
 
+#include "accesstoken.h"
 #include "logindialog.h"
+#include "requesttoken.h"
 
 class FlickrAuth : public QObject
 {
@@ -18,8 +20,9 @@ private:
     QString userName;
     QString userPassword;
     bool rememberMe;
-    QWidget* parent;
-    LoginDialog* loginDialog;
+
+    QWidget* parent = NULL;
+    LoginDialog* loginDialog = NULL;
 
     QNetworkAccessManager* httpManager;
 
@@ -55,7 +58,20 @@ private:
      */
     QString extractOAuthTokenSecret(QString message);
 
-    bool authorizeApplicationAccess(QString oauth_token);
+    /**
+     * @brief authorizeApplicationAccess Asks user to authorize access to Flikr resources.
+     * @param oauth_token token extracted with extractOAuthToken();
+     * @return a <code>RequestToken</code>
+     */
+    RequestToken authorizeApplicationAccess(QString oauth_token);
+
+    /**
+     * @brief getAccessToken Gets an access token using the request token
+     * obtained using <code>authorizeApplicationAccess()</code>.
+     * @param requestToken a <code>RequestToken</code> instance sent by Flickr.
+     * @return a <code>AccessToken</code> instance containig the access token.
+     */
+    AccessToken getAccessToken(RequestToken requestToken);
 
 public:
     FlickrAuth(QWidget* parent, QString userName, QString userPassword, bool rememberMe);

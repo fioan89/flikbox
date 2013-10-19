@@ -16,13 +16,19 @@ SOURCES += main.cpp\
     flickrauth.cpp \
     crypto.cpp \
     httpmanager.cpp \
-    logindialog.cpp
+    logindialog.cpp \
+    jscriptsignalhandler.cpp \
+    requesttoken.cpp \
+    accesstoken.cpp
 
 HEADERS  += mainwindow.h \
     flickrauth.h \
     crypto.h \
     httpmanager.h \
-    logindialog.h
+    logindialog.h \
+    jscriptsignalhandler.h \
+    requesttoken.h \
+    accesstoken.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui

@@ -3,6 +3,10 @@
 
 #include <QDialog>
 #include <QString>
+#include <QUrl>
+
+#include "jscriptsignalhandler.h"
+#include "requesttoken.h"
 
 namespace Ui {
 class LoginDialog;
@@ -13,7 +17,7 @@ class LoginDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit LoginDialog(QWidget *parent = 0);
+    explicit LoginDialog(QWidget *parent = 0, RequestToken* requestToken = 0);
     /**
      * @brief setUserName Sets username for Flickr login page.
      * @param username a string representing the desired username.
@@ -36,12 +40,23 @@ private:
     Ui::LoginDialog *ui;
     QString username;
     QString password;
-
+    JScriptSignalHandler* jsHandler;
+    RequestToken* requestToken;
+private slots:
     /**
-     * @brief getLoginScript Builds a javascript to be injected in the login page.
-     * @return the javascript file.
+     * @brief pageLoadFinished Injects javascript code in the web page when URL finished to load.
+     * @param finished true if page successful loaded, false otherwise.
+     */\
+    void pageLoadFinished(bool finished);
+    /**
+     * @brief authUrlChanged Executes logic when a URL has been changed.
+     * @param url the new URL
      */
-    QString getLoginScript();
+    void authUrlChanged(QUrl url);
+    /**
+     * @brief windowObjectCleared Executes logic when a new page is loaded.
+     */
+    void windowObjectCleared();
 };
 
 #endif // LOGINDIALOG_H
